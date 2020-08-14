@@ -1,0 +1,3 @@
+﻿  Base64.cpp
+d:\比特\比特作业\c-test\c++项目\base64\base64\base64.cpp(80): warning C4018: “<”: 有符号/无符号不匹配
+  base64.vcxproj -> D:\比特\比特作业\C-Test\C++项目\base64\Debug\base64.exe
