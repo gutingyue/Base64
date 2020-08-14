@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Base64在线转换工具</title>
+		
+		<style>
+			/*清除浏览器默认显示格式*/
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			/*定义选择栏样式*/
+			#select_menu{
+				width: 800px;
+				height: 30px;
+				background-color: lightgoldenrodyellow;
+				margin: 100px auto 2px;
+			}
+			
+			/*定义内容框样式*/
+			#content{
+				width: 795px;
+				height: 500px;
+				
+				border-color: lightblue;
+				border-width: 2px;
+				border-style: groove;
+				
+				margin: 0px auto 20px;
+			}
+			
+			li{
+					list-style: none;
+			}
+			
+			/*定义选项样式*/
+			#select_menu li{
+				width: 50%;
+				height: 30px;
+				background-color: lightskyblue;
+				float: left;/*浮动   使两个li相连*/
+				text-align: center;/*描述对齐方式*/
+				color: white;
+				font-weight:bold ;/*字体加粗*/
+			}
+		</style>
+	</head>
+	<body>
+		<div id="select_menu"> 
+			<ul>
+				<li>文本转换</li>
+				<li>图片转换</li>
+			</ul>
+		</div>
+		<div id="content"> </div>
+	</body>
+</html>
