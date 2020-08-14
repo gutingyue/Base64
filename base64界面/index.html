@@ -15,13 +15,12 @@
 			#select_menu{
 				width: 800px;
 				height: 30px;
-				background-color: lightgoldenrodyellow;
 				margin: 100px auto 2px;
 			}
 			
 			/*定义内容框样式*/
 			#content{
-				width: 795px;
+				width: 800px;
 				height: 500px;
 				
 				border-color: lightblue;
@@ -32,7 +31,8 @@
 			}
 			
 			li{
-					list-style: none;
+					list-style: none;/*清除li原有样式*/
+					cursor: pointer;/*鼠标样式*/
 			}
 			
 			/*定义选项样式*/
@@ -41,22 +41,140 @@
 				height: 30px;
 				background-color: lightskyblue;
 				float: left;/*浮动   使两个li相连*/
-				text-align: center;/*描述对齐方式*/
+				text-align: center;/*描述对齐方式，使字体居中*/
 				color: white;
 				font-weight:bold ;/*字体加粗*/
 			}
+			/*给li元素设置hover时间*/
 			#select_menu li:hover{
 				background-color: lightblue;
 			}
+			
+			/*文本转换界面*/
+			.page1{
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+			
+			
+			.txt_left{
+				width: 340px;
+				height: 490px;
+				float: left;
+				background-color: white;
+				
+				border-color: lightblue;
+				border-width: 5px;
+				border-style: solid;
+				
+				
+			} 
+			.txt_mid{
+				width: 100px;
+				height: 100%;
+				float: left;
+				text-align: center;/*文本居中*/
+			}
+			.txt_mid button{
+				display: inline;
+				background-color: lightslategray;
+				margin: 80px auto 80px;
+				color: white;
+			}
+			
+			.txt_right{
+				width: 340px;
+				height: 490px;
+				background-color: white;
+				float: left;
+				
+				border-color: lightblue;
+				border-width: 5px;
+				border-style: solid;
+			}
+			/*文本转换界面_文本框样式设置*/
+			.text{
+				width: 100%;
+				height: 100%;
+			}
+			
+			
+			
+			/*图片转换界面*/
+			.page2{
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.pic_text{
+				width: 800px;
+				height: 450px;
+			}
+			
+			
+			
 		</style>
 	</head>
 	<body>
+		<!--功能菜单-->
 		<div id="select_menu"> 
 			<ul>
-				<li>文本转换</li>
-				<li>图片转换</li>
+				<li onclick="select_op(true)">文本转换</li>
+				<li onclick="select_op(false)">图片转换</li>
 			</ul>
 		</div>
-		<div id="content"> </div>
+		
+		<!--转换内容区-->
+		<div id="content"> 
+			<!--文字转换-->
+			<div id="txt_page" class="page1">
+				
+				<div class="txt_left">
+					<textarea class="text"></textarea>
+				</div>
+				
+				<div class="txt_mid">
+					<button>文本转Base64</button>
+					<button>Base64转文本</button>
+				</div>
+				
+				<div class="txt_right">
+					<textarea class="text"></textarea>
+				</div>
+			</div>
+			
+			
+			<!--图片转换-->
+			<div id="pic_page" class="page2">
+				<input type="file" name="pic_file" style="color: #696969;"/>
+				<button style="color: #696969; background-color: ghostwhite;" >图片转Base64</button>
+				<p>图片文件</p>
+				<textarea class="pic_text"></textarea>
+			</div>
+		</div>
+
+		
+		<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+		<script>
+			function select_op(op)
+			{
+				if(op){
+					//op为ture表示选择的是文本转base64，则显示文本转换页面
+					//通过id获取文档流
+					//alert("text");//测试使用
+					document.getElementById("txt_page").style.display="block";
+					document.getElementById("pic_page").style.display="none";
+				}
+				else{
+					//op为false表示选择的是图片转base64,则显示图片转换页面
+					//alert("pic");
+					document.getElementById("pic_page").style.display="block";
+					document.getElementById("txt_page").style.display="none";
+				}
+			}
+		</script>
+		
 	</body>
 </html>
