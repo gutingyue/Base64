@@ -76,7 +76,7 @@ string Base64::Decode(const string& strData){
 		39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, // 'a'-'z'
 	};
 
-	size_t value;
+	size_t value = 0;
 	for(int i = 0; i < strData.size();){
 		if (strData[i] != '\r'&&strData[i + 1] != '\n'){
 			//一行没解析完
@@ -99,11 +99,9 @@ string Base64::Decode(const string& strData){
 					strDecode += (value & 0xFF);
 				}
 			}
-			else{
+			else{//解压到=，跳出循环
 				break;
 			}
-
-
 		}
 		else{
 			//解码到达末尾，跳过"\r\n"

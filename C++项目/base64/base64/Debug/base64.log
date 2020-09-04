@@ -1,2 +1,5 @@
 ﻿  Base64Tool.cpp
-d:\比特\项目\base64\c++项目\base64\base64\base64tool.cpp : fatal error C1041: 无法打开程序数据库“d:\比特\项目\base64\c++项目\base64\base64\debug\vc120.pdb”；如果要将多个 CL.EXE 写入同一个 .PDB 文件，请使用 /FS
+  Base64.cpp
+d:\比特\项目\base64\c++项目\base64\base64\base64.cpp(80): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
+  base64.vcxproj -> D:\比特\项目\Base64\C++项目\base64\Debug\base64.exe
