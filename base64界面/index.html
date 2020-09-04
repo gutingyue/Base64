@@ -132,16 +132,17 @@
 			<div id="txt_page" class="page1">
 				
 				<div class="txt_left">
-					<textarea class="text"></textarea>
+					<textarea id="LeftTextarea_str" class="text"></textarea>
 				</div>
 				
 				<div class="txt_mid">
-					<button>文本转Base64</button>
-					<button>Base64转文本</button>
+					<!--onclick:单击事件-->
+					<button onclick="StrtoBase64()">文本转Base64</button>
+					<button onclick="Base64toStr()">Base64转文本</button>
 				</div>
 				
 				<div class="txt_right">
-					<textarea class="text"></textarea>
+					<textarea id="RightTextarea_str" class="text"></textarea>
 				</div>
 			</div>
 			
@@ -149,7 +150,7 @@
 			<!--图片转换-->
 			<div id="pic_page" class="page2">
 				<input type="file" name="pic_file" style="color: #696969;"/>
-				<button style="color: #696969; background-color: ghostwhite;" >图片转Base64</button>
+				<button style="color: #696969; background-color: ghostwhite;" onclick="PictoBase64()">图片转Base64</button>
 				<p>图片文件</p>
 				<textarea class="pic_text"></textarea>
 			</div>
@@ -173,6 +174,94 @@
 					document.getElementById("pic_page").style.display="block";
 					document.getElementById("txt_page").style.display="none";
 				}
+			}
+			
+			//文本转Base64方法
+			function StrtoBase64()
+			{
+				
+				////////1.从网页中的taxtarea中获取文本数据
+				//获取id为Textarea_str文本框中的字符串数据
+				var strData=document.getElementById("LeftTextarea_str").value;
+				
+				////////2.构造Post请求，并将其发送给服务器
+				//使用ajax技术，给服务器提交数据
+				$.ajax({
+					type:"POST", //请求方法
+					url:"/str_to_base64",      //给出资源路径
+					data:JSON.stringify({"strData":strData}),//通过JSON的方式来组织数据,传输数据为键值对格式
+					dataType:"json",//约定服务端响应数据的类型
+					
+					success:function(result){//成功的处理函数
+						//result中保存Json格式的解码后文本数据
+						//修改id为LeftTextarea_str控件中的值val为result中的base64Data
+						$("#RightTextarea_str").val(result["base64Data"]);
+				
+					},
+					
+					error:function(result){//失败的处理函数
+						alert("转化失败");
+					}
+				});
+				
+			}
+			
+			//Base64转文本
+			function Base64toStr()
+			{
+							
+				////////1.从网页中的taxtarea中获取文本数据
+				//获取id为RightTextarea_str的右边文本框中的字符串数据
+				var base64Data=document.getElementById("RightTextarea_str").value;
+				
+				////////2.构造Post请求，并将其发送给服务器
+				//使用ajax技术，给服务器提交数据
+				$.ajax({
+					type:"POST", //请求方法
+					url:"/base64_to_str",      //给出资源路径
+					data:JSON.stringify({"base64Data":base64Data}),//通过JSON的方式来组织数据,传输数据为键值对格式
+					dataType:"json",//约定服务端响应数据的类型
+					
+					success:function(result){//成功的处理函数
+						//result中保存Json格式的解码后文本数据
+						//修改id为RightTextarea_str控件中的值val为result中的StrData
+						$("#LiftTextarea_str").val(result["StrData"]);
+						
+					},
+					
+					error:function(result){//失败的处理函数
+						alert("转化失败");
+					}
+				});
+			}
+			
+			function PictoBase64()
+			{
+				//加载到图片后，页面上只显示图片路径
+				//先要获取图片内容的数据
+				
+				//获取id为Textarea_str文本框中的字符串数据
+				var strData=document.getElementById("LeftTextarea_str").value;
+				
+				////////2.构造Post请求，并将其发送给服务器
+				//使用ajax技术，给服务器提交数据
+				$.ajax({
+					type:"POST", //请求方法
+					url:"/str_to_base64",      //给出资源路径
+					data:JSON.stringify({"strData":strData}),//通过JSON的方式来组织数据,传输数据为键值对格式
+					dataType:"json",//约定服务端响应数据的类型
+					
+					success:function(result){//成功的处理函数
+						//result中保存Json格式的解码后文本数据
+						//修改id为LeftTextarea_str控件中的值val为result中的base64Data
+						$("#RightTextarea_str").val(result["base64Data"]);
+				
+					},
+					
+					error:function(result){//失败的处理函数
+						alert("转化失败");
+					}
+				});
 			}
 		</script>
 		
