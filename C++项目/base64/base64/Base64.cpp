@@ -98,6 +98,9 @@ string Base64::Decode(const string& strData){
 					value += DecodeTable[strData[i++]];
 					strDecode += (value & 0xFF);
 				}
+				else{
+					break;
+				}
 			}
 			else{//解压到=，跳出循环
 				break;
@@ -111,4 +114,4 @@ string Base64::Decode(const string& strData){
 
 
 	return strDecode;
-}
+ }

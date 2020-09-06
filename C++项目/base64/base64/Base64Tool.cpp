@@ -92,11 +92,10 @@ void Str2Base64(const httplib::Request& req,httplib::Response& res){
 	Json::Value req_val;
 	Json::Reader re;
 	if (!re.parse(req.body, req_val)){ //使用parse()方法对请求中的body部分进行解析，将解析数据放入val中,解析成功返回true,否则返回flase
-		//res.set_content("str", "text/html");
+		res.set_content("error", "text/html");
 		res.status = 500;//失败返回状态码为500
 		return;
 	}
-
 	//将文本转换为base64
 	Base64 base64;
 	string res_str = base64.Encode(req_val["strData"].asString());//获取数据，进行编码
@@ -112,11 +111,12 @@ void Str2Base64(const httplib::Request& req,httplib::Response& res){
 	res.status = 200;//成功返回状态码为200
 }
 
-void Base642Str(const httplib::Request req,httplib::Response res){
+void Base642Str(const httplib::Request& req,httplib::Response& res){
 	//获取请求中的序列化数据
 	Json::Value req_val;
 	Json::Reader re;//反序列化对象
 	if (!re.parse(req.body,req_val)){
+		res.set_content("base64 to str error", "text/html");
 		res.status = 500;
 		return;
 	}
@@ -124,16 +124,45 @@ void Base642Str(const httplib::Request req,httplib::Response res){
 	//将文本转换为base64
 	Base64 base64;
 	string res_str = base64.Decode(req_val["base64Data"].asString());//获取数据，进行编码
+	//cout << res_str << endl;
 
 	//对转码后的数据进行序列化
 	Json::StyledWriter sw;//序列化对象
 	Json::Value res_val;
-	res_val["StrData"] = res_str;//将转码后的数据放入val中
+	res_val["strData"] = res_str;//将转码后的数据放入val中
 	res_str = sw.write(res_val);//对val中数据进行序列化
 
 	//将转化结果发给客户端
 	res.set_content(res_str, "text/html");
 	res.status = 200;//成功返回状态码为200
+}
+
+
+void Pic2Base64(const httplib::Request& req, httplib::Response& res){
+	//从请求中获取图片数据
+	auto picFile = req.files;
+	auto formdata = picFile.find("strpicData")->second;//从名为strpicData文件的第二个字段，拿到一个表单
+	auto picdata = formdata.content;//从表单数据中拿到图片数据，获取表单内容，其内容为一张图片
+
+	//将图片数据转换成base64编码
+	Base64 base64;
+	string res_str;
+	//响应数据是一个标签，包括图片路径+转码后base64编码
+	res_str += "<img src='data:img/jpg;base64,";
+	res_str += base64.Encode(picdata);//获取数据，进行编码
+	res_str += "'/>";
+
+	//对转码后的数据进行序列化，使用Json来组织返回的数据
+	Json::Value res_val;
+	res_val["picData"] = res_str;//将转码后的数据放入val中
+
+	Json::StyledWriter sw;//序列化对象
+	res_str = sw.write(res_val);//对val中数据进行序列化
+
+	//将转化结果构造成一个响应包，发给客户端
+	res.set_content(res_str, "text/html");
+	res.status = 200;//成功返回状态码为200
+
 }
 
 int main(){
@@ -150,12 +179,13 @@ int main(){
 
 	s.Post("/base64_to_str", Base642Str);
 
+	s.Post("/pic_to_base64", Pic2Base64);
+
 	//设置目录
 	s.set_base_dir(".//..//Debug");//.当前目录//..上一层目录//Debug目录
 	//搜索框中只输入IP地址和端口号，没有给资源路径，默认在设置的路径下找html界面，进行响应
 
 	s.listen("127.0.0.1", 9000);//本地回环地址
-
 
 
 	return 0;

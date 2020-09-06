@@ -1,5 +1,3 @@
 ﻿  Base64Tool.cpp
-  Base64.cpp
-d:\比特\项目\base64\c++项目\base64\base64\base64.cpp(80): warning C4018: “<”: 有符号/无符号不匹配
-  正在生成代码...
+cl : 命令行 warning D9028: 最小重新生成失败，正在转换为标准生成
   base64.vcxproj -> D:\比特\项目\Base64\C++项目\base64\Debug\base64.exe
